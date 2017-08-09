@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: service-A
+  jackson:
+      deserialization: true
+server:
+  port: 4445
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+              defaultZone: http://waterlufei:123456@${eureka.instance.hostname}:1111/eureka/
+#允许信息被监控
+management:
+  security:
+    enabled: false
+logging:
+  file: ./target/test.log

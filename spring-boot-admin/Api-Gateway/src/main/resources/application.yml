@@ -1,0 +1,34 @@
+#开启端口
+server:
+  port: 2222
+spring:
+  #服务名称
+  application:
+    name: api-gateway
+  jackson:
+    deserialization: true
+eureka:
+  #主页
+  instance:
+    hostname: localhost
+    home-page-url: http://${eureka.instance.hostname}:${server.port}/
+  client:
+    #注册中心注册
+    service-url:
+      defaultZone: http://waterlufei:123456@${eureka.instance.hostname}:1111/eureka/
+#允许信息被监控
+management:
+  security:
+    enabled: false
+#路由映射
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: service-A
+    api-b:
+      path: /api-b/**
+      serviceId: sidecar
+    api-c:
+      path: /api-c/**
+      serviceId: admin-server

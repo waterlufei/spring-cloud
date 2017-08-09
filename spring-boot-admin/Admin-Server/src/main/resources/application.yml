@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: admin-server
+  jackson:
+      deserialization: true
+  #指定监控的服务名称
+  boot:
+    admin:
+      discovery:
+        services: admin-server,api-gateway,service-a,eureka-server
+      username: waterlufei   #These two are needed so that the client
+      password: 9527         #can register at the protected server api
+      client:
+        metadata:
+          user.name: waterlufei   #These two are needed so that the server
+          user.password: 9527     #can access the proteceted client endpoints
+server:
+  port: 9527
+eureka:
+  instance:
+    hostname: localhost
+    home-page-url: http://${eureka.instance.hostname}:${server.port}/
+  client:
+      service-url:
+        defaultZone: http://waterlufei:123456@${eureka.instance.hostname}:1111/eureka/
+#允许信息被监控
+management:
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
+#设置访问权限
+security:
+  user:
+    name: waterlufei
+    password: 9527
+  basic:
+    enabled: false
+logging:
+  file: ./target/test.log
